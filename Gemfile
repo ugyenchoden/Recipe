@@ -83,8 +83,8 @@ end
 
 gem 'clockwork', require: false
 gem 'dotenv-rails'
-gem 'faraday'
-gem 'faraday_middleware'
+gem 'faraday', '2.7.5'
+gem 'faraday-retry'
 gem 'faulty'
 gem 'kaminari-actionview'
 gem 'kaminari-activerecord'

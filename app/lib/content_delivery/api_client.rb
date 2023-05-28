@@ -2,6 +2,7 @@
 
 require 'digest'
 require 'faraday'
+require 'faraday/retry'
 
 module ContentDelivery
   class ApiClient
@@ -15,6 +16,7 @@ module ContentDelivery
       @client = Faraday.new(*config) do |f|
         f.request :json
         f.response :json
+        f.request :retry, retry_options
         f.response :raise_error
         f.response :logger, Rails.logger, headers: true, bodies: true, log_level: :debug do |formatter|
           formatter.filter(/^(Authorization:).+$/i, '\1[REDACTED]')
@@ -48,7 +50,7 @@ module ContentDelivery
         interval: 0.5,
         backoff_factor: 2,
         interval_randomness: 0.5,
-        retry_status: [429],
+        retry_statuses: [429],
         methods: [:get]
       }
     end
