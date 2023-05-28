@@ -85,6 +85,7 @@ gem 'clockwork', require: false
 gem 'dotenv-rails'
 gem 'faraday'
 gem 'faraday_middleware'
+gem 'faulty'
 gem 'kaminari-actionview'
 gem 'kaminari-activerecord'
 gem 'pgcrypto'

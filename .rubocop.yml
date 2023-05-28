@@ -1,0 +1,77 @@
+require:
+  - rubocop-performance
+  - rubocop-rspec
+  - rubocop-rails
+AllCops:
+  Exclude:
+    - local/**/*
+    - app/assets/**/*
+    - bin/bundle
+    - db/schema.rb
+    - tmp/**/*
+    - vendor/bundle/**/*
+  DisplayCopNames: true
+  DisplayStyleGuide: true
+  TargetRubyVersion: 3.1.3
+  NewCops: enable
+
+Metrics/BlockLength:
+  Exclude: ['describe']
+  Max: 300
+Style/Documentation:
+  Enabled: false
+
+# Rails automatically detects `inverse_of` association from 4.1 onwards. Although it
+# doesn't notify if it fails to infer. If that is noticed, add it and re-enable this.
+Rails/InverseOf:
+  Enabled: false
+
+# Devs are expected to be aware of methods that don't trigger validations/callbacks.
+# `insert_all`, `upsert_all`, `update_columns` etc are used for an improved performance.
+Rails/SkipsModelValidations:
+  Enabled: false
+
+RSpec/ContextWording:
+  Prefixes:
+    - for
+    - when
+    - with
+    - without
+    - as
+
+# With swagger, it blocks aren't necessary
+RSpec/EmptyExampleGroup:
+  Enabled: false
+
+# This is for a special case
+#  #=> let(:Authorization) { token(user) }
+# where you need to send variable name as 'Authorization'
+RSpec/VariableName:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Max: 6
+
+RSpec/MultipleExpectations:
+  Max: 6
+
+RSpec/ExampleLength:
+  Max: 30
+
+Rails/Output:
+  Enabled: false
+
+Naming/MemoizedInstanceVariableName:
+  EnforcedStyleForLeadingUnderscores: optional
+
+Naming/VariableNumber:
+  EnforcedStyle: snake_case
+
+Lint/ElseLayout:
+  Enabled: false
+
+Style/OpenStructUse:
+  Enabled: false
+
+RSpec/AnyInstance:
+  Enabled: false
