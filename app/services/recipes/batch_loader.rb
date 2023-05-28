@@ -18,7 +18,7 @@ module Recipes
     end
 
     def make_request(offset, content_type)
-      client.call('get', "/entries?content_type=#{content_type}&skip=#{offset}")
+      Gateways.content_delivery.call('get', "/entries?content_type=#{content_type}&skip=#{offset}")
     end
   end
 end

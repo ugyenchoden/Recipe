@@ -7,7 +7,7 @@ module Recipes
     end
 
     def run
-      response = client.call('get', "/entries/#{@id}")
+      response = Gateways.content_delivery.call('get', "/entries/#{@id}")
       r = response.get if response.ok?
       recipe = Recipe.new(r)
       {
@@ -22,13 +22,13 @@ module Recipes
     def chef(id)
       return if id.nil?
 
-      response = client.call('get', "/entries/#{id}")
+      response = Gateways.content_delivery.call('get', "/entries/#{id}")
       c = response.get if response.ok?
       c['fields']['name']
     end
 
     def photo(id)
-      response = client.call('get', "/assets/#{id}")
+      response = Gateways.content_delivery.call('get', "/assets/#{id}")
       p = response.get if response.ok?
       Asset.new(p)
     end
@@ -38,7 +38,7 @@ module Recipes
       return response if tag_ids.nil?
 
       tag_ids.each do |id|
-        r = client.call('get', "/entries/#{id}")
+        r = Gateways.content_delivery.call('get', "/entries/#{id}")
 
         s = r.get if r.ok?
         response << s['fields']['name']
