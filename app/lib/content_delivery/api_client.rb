@@ -58,9 +58,7 @@ module ContentDelivery
     def config
       [
         {
-          headers: {
-            authorization: "Bearer #{ENV.fetch('AUTH_TOKEN', nil)}"
-          },
+          headers: { authorization: "Bearer #{ENV.fetch('AUTH_TOKEN', nil)}" },
           request: {
             open_timeout: 1,
             read_timeout: 5,

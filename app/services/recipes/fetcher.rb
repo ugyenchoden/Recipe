@@ -3,6 +3,7 @@
 module Recipes
   class Fetcher < ApplicationService
     include BatchLoader
+
     def run
       responses = []
       fetch_data(0, 'recipe') do |response|
@@ -14,18 +15,16 @@ module Recipes
     private
 
     def process_recipes(response)
-      recipes = []
       assets = response.dig('includes', 'Asset').map { |asset| Asset.new(asset) }
-      response['items'].each do |item|
-        recipe_object = Recipe.new(item)
-        asset_object = assets.find { |asset| asset.id == recipe_object.photo_id }
-        recipes << {
-          id: recipe_object.id,
-          title: recipe_object.title,
-          file_url: asset_object.file_url
+      response['items'].map do |item|
+        recipe = Recipe.new(item)
+        photo = assets.find { |asset| asset.id == recipe.photo_id }
+        {
+          id: recipe.id,
+          title: recipe.title,
+          file_url: photo.file_url
         }
       end
-      recipes
     end
   end
 end
