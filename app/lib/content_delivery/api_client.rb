@@ -2,7 +2,6 @@
 
 require 'digest'
 require 'faraday'
-require 'faraday_middleware'
 
 module ContentDelivery
   class ApiClient
@@ -16,7 +15,6 @@ module ContentDelivery
       @client = Faraday.new(*config) do |f|
         f.request :json
         f.response :json
-        # f.response :retry, retry_options
         f.response :raise_error
         f.response :logger, Rails.logger, headers: true, bodies: true, log_level: :debug do |formatter|
           formatter.filter(/^(Authorization:).+$/i, '\1[REDACTED]')
