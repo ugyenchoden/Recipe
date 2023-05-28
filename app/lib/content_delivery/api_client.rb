@@ -1,21 +1,23 @@
 # frozen_string_literal: true
 
 require 'digest'
+require 'faraday'
+require 'faraday_middleware'
 
 module ContentDelivery
   class ApiClient
     URL = "https://cdn.contentful.com/spaces/#{ENV.fetch('SPACE_ID', nil)}".freeze
 
     def self.default
-      @default ||= Client.new
+      @default ||= ApiClient.new
     end
 
     def initialize
       @client = Faraday.new(*config) do |f|
         f.request :json
         f.response :json
+        # f.response :retry, retry_options
         f.response :raise_error
-        f.response :retry, retry_options
         f.response :logger, Rails.logger, headers: true, bodies: true, log_level: :debug do |formatter|
           formatter.filter(/^(Authorization:).+$/i, '\1[REDACTED]')
         end
@@ -24,8 +26,8 @@ module ContentDelivery
     end
 
     def call(verb, api_path)
-      cache = Digest::SHA256.hexdigest({ path: api_path }.inspect)
-      circuit.try_run(cache:) do
+      cache = Digest::SHA256.hexdigest(api_path)
+      circuit.try_run(cache: cache) do
         response = @client.public_send(verb, "#{URL}#{api_path}")
         response.body
       end
@@ -37,8 +39,8 @@ module ContentDelivery
       @circuit ||= Faulty.circuit(
         :content_delivery,
         cache_expires_in: 1.day,
-        cache_refresh: 1.hour,
-        evaluation_window: 10.minutes
+        cache_refresh_jitter: 1.hour,
+        evaluation_window: 60.minutes
       )
     end
 

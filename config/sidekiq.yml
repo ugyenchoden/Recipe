@@ -1,0 +1,6 @@
+---
+queues:
+  - default
+  - tag_fetcher
+  - chef_fetcher
+  - recipe_fetcher
