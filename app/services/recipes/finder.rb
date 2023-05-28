@@ -24,6 +24,7 @@ module Recipes
 
       response = client.call('get', "/entries/#{id}")
       c = response.get if response.ok?
+      c['fields']['name']
     end
 
     def photo(id)
@@ -33,9 +34,9 @@ module Recipes
     end
 
     def tags(tag_ids)
-      return if tag_ids.nil?
-
       response = []
+      return response if tag_ids.nil?
+
       tag_ids.each do |id|
         r = client.call('get', "/entries/#{id}")
 

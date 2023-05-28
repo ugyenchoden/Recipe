@@ -27,7 +27,7 @@ module ContentDelivery
 
     def call(verb, api_path)
       cache = Digest::SHA256.hexdigest(api_path)
-      circuit.try_run(cache: cache) do
+      circuit.try_run(cache:) do
         response = @client.public_send(verb, "#{URL}#{api_path}")
         response.body
       end

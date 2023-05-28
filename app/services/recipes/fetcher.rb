@@ -2,6 +2,7 @@
 
 module Recipes
   class Fetcher < ApplicationService
+    include BatchLoader
     def run
       responses = []
       fetch_data(0, 'recipe') do |response|

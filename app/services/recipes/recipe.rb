@@ -27,6 +27,8 @@ module Recipes
     end
 
     def tag_ids
+      return unless @data['fields'].key?('tags')
+
       @data['fields']['tags'].map { |tag| tag['sys']['id'] }
     end
   end
