@@ -27,7 +27,9 @@ module ContentDelivery
 
     def call(verb, api_path)
       response = @client.public_send(verb, "#{URL}#{api_path}")
-      response.body
+      return response.body unless response.body.is_a?(String)
+
+      JSON.parse(response.body)
     end
 
     private

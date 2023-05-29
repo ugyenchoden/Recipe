@@ -3,14 +3,19 @@
 require 'rails_helper'
 
 describe Recipes::Fetcher do
-  before do
-    Recipes::TagsFetcher.new.run
-    Recipes::ChefsFetcher.new.run
-  end
+  it 'creates recipes with their associations' do # rubocop:disable RSpec/MultipleExpectations
+    stub_content_delivery_api
 
-  it 'creates recipes with their associations' do
     described_class.new.run
-    expect(Recipe.count).to be(4)
-    expect(Photo.count).to be(4)
+
+    expect(Recipe.count).to be(1)
+    expect(Asset.count).to be(1)
+    expect(Tag.count).to be(1)
+    expect(Chef.count).to be(1)
+
+    recipe = Recipe.take
+    expect(recipe.title).to eq('Ema Datsi')
+    expect(recipe.tags.pluck(:name)).to contain_exactly('vegan')
+    expect(recipe.name).to eq('Ugyen Choden')
   end
 end

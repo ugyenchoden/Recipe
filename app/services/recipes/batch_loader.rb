@@ -6,7 +6,6 @@ module Recipes
 
     def fetch_data(offset, content_type)
       response = make_request(offset, content_type)
-
       return if response.empty? || !response.key?('items')
 
       yield(response)

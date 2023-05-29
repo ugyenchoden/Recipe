@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :photo do
+  factory :asset do
     title { 'Ema datshi' }
     filename { 'ema_datshi.jpeg' }
     file_url { 'https://loremflickr.com/300/300' }

@@ -13,7 +13,7 @@ FactoryBot.define do
     entry_id { 'recipe101' }
 
     after(:build) do |recipe|
-      !recipe.photo && recipe.photo = build(:photo)
+      !recipe.asset && recipe.asset = build(:asset)
     end
   end
 end

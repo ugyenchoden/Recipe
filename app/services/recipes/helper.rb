@@ -21,7 +21,7 @@ module Recipes
       tag_ids = []
       entries.each do |entry|
         klass = entry.content_type.classify.constantize
-        entry.content_type == 'chef' ? chef_ids << entry.id : tag_ids << entry_id
+        entry.content_type == 'chef' ? chef_ids << entry.id : tag_ids << entry.id
         klass.find_or_initialize_by(entry_id: entry.id).tap do |record|
           record.update!(
             name: entry.name,
@@ -36,7 +36,7 @@ module Recipes
 
     def delete_records(ids, klass)
       # delete chefs, tags and recipes that are no longer in content delivery api
-      return if ids.empty
+      return if ids.empty?
 
       klass.classify.constantize.where.not(entry_id: ids).destroy_all
     end
