@@ -2,10 +2,9 @@
 
 require 'rails_helper'
 
-RSpec.describe Tag do
+RSpec.describe Photo do
   describe 'associations' do
-    it { is_expected.to have_many(:recipe_tags).dependent(:destroy) }
-    it { is_expected.to have_many(:recipes).through(:recipe_tags) }
+    it { is_expected.to belong_to(:recipe) }
   end
 
   describe 'validations' do
