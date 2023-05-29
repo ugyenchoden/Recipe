@@ -1,22 +1,22 @@
 <div class="bg-white border border-gray-200 rounded-lg shadow dark:border-gray-700 mx-auto">
-    <%= image_tag("https:#{@recipe[:file_url]}", class: "rounded-t-lg") %>
+    <%= image_tag("https:#{@recipe.file_url}", class: "rounded-t-lg") %>
   <div class="px-5 py-1">
-    <h3><%= @recipe[:title] %></h3>
+    <h3><%= @recipe.title %></h3>
   </div>
 
   <div class="px-5 py-1">
-    <% @recipe[:tags].map do |tag| %>
+    <% @recipe.tags.map do |tag| %>
       <span class="inline-block bg-gray-200 text-sm px-2 py-1 rounded-full mr-2 mb-2">
-        <%= tag %>
+        <%= tag.name %>
       </span>
     <% end %>
   </div>
 
   <div class="px-5 py-1">
-    <%= @recipe[:description] %>
+    <%= @recipe.description %>
   </div>
 
   <div class="px-5 py-1">
-    <p>Recipe by <%= @recipe[:chef] || '-' %></p>
+    <p>Recipe by <%= @recipe.chef || '-' %></p>
   </div>
 </div>

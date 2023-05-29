@@ -1,13 +1,11 @@
 <% @recipes.each do |recipe| %>
   <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:border-gray-700">
-    <a href="<%= api_v1_recipe_path(recipe[:id]) %>">
-      <%= image_tag("https:#{recipe[:file_url]}", class: "rounded-t-lg") %>
+    <a href="<%= api_v1_recipe_path(recipe.id) %>">
+      <%= image_tag("https:#{recipe.file_url}", class: "rounded-t-lg") %>
 
       <div class="p-5">
-        <p><%= recipe[:title] %></p>
+        <p><%= recipe.title %></p>
       </div>
     </a>
   </div>
 <% end %>
-
-<%#= paginate @recipes %>

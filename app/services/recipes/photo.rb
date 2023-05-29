@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Recipes
-  class Asset
+  class Photo
     def initialize(data)
       @data = data
     end
@@ -16,6 +16,14 @@ module Recipes
 
     def file_url
       @data['fields']['file']['url']
+    end
+
+    def revision
+      @data['sys']['revision']
+    end
+
+    def filename
+      @data['fields']['file']['fileName']
     end
   end
 end

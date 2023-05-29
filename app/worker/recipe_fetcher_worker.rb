@@ -4,6 +4,6 @@ class RecipeFetcherWorker < ApplicationWorker
   queue_as 'recipe_fetcher'
 
   def perform
-    Recipes::Lister.new.run
+    Recipes::Fetcher.new.run
   end
 end

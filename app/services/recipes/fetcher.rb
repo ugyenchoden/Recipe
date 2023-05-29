@@ -3,28 +3,23 @@
 module Recipes
   class Fetcher < ApplicationService
     include BatchLoader
+    include AttributesHelper
+    include Helper
 
     def run
-      responses = []
       fetch_data(0, 'recipe') do |response|
-        responses << process_recipes(response)
+        process_recipes(response)
       end
-      responses.flatten
     end
 
     private
 
     def process_recipes(response)
-      assets = response.dig('includes', 'Asset').map { |asset| Asset.new(asset) }
-      response['items'].map do |item|
-        recipe = Recipe.new(item)
-        photo = assets.find { |asset| asset.id == recipe.photo_id }
-        {
-          id: recipe.id,
-          title: recipe.title,
-          file_url: photo.file_url
-        }
-      end
+      assets = response.dig('includes', 'Asset').map { |asset| Photo.new(asset) }
+      entries = response.dig('includes', 'Entry').map { |entry| Entry.new(entry) }
+      create_or_update_entries(entries)
+      recipes = response['items'].map { |item| Entry.new(item) }
+      create_or_update_recipes(recipes, assets)
     end
   end
 end

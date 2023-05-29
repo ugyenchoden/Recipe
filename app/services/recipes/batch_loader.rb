@@ -6,13 +6,12 @@ module Recipes
 
     def fetch_data(offset, content_type)
       response = make_request(offset, content_type)
-      response = response.get if response.ok?
 
       return if response.empty? || !response.key?('items')
 
       yield(response)
 
-      return if response['total'] < BATCH_SIZE
+      return response if response['total'] < BATCH_SIZE
 
       fetch_data(offset + BATCH_SIZE, content_type)
     end

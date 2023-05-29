@@ -4,11 +4,11 @@ module Api
   module V1
     class RecipesController < ApplicationController
       def index
-        @recipes = Recipes::Fetcher.new.run
+        @recipes = Recipe.all
       end
 
       def show
-        @recipe = Recipes::Finder.new(id: params[:id]).run
+        @recipe = Recipe.find(params[:id])
       end
     end
   end
