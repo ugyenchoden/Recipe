@@ -11,6 +11,19 @@ module Recipes
       end
     end
 
+    def recipe_attributes(recipe, photo)
+      chef = Chef.find_by(entry_id: recipe&.chef_id)
+      {
+        title: recipe.title,
+        revision: recipe.revision,
+        description: recipe.description,
+        calories: recipe&.calories,
+        asset_attributes: asset_attributes(photo),
+        recipe_tags_attributes: recipe_tags_attributes(recipe.tag_ids),
+        chef_id: chef&.id
+      }
+    end
+
     def asset_attributes(photo)
       {
         entry_id: photo.id,
