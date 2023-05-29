@@ -13,6 +13,8 @@ module ContentDelivery
     end
 
     def initialize
+      validate_configuration!
+
       @client = Faraday.new(*config) do |f|
         f.request :json
         f.response :json
@@ -56,6 +58,11 @@ module ContentDelivery
           }
         }
       ]
+    end
+
+    def validate_configuration!
+      raise ArgumentError, 'Add SPACE_ID in .env' if ENV['SPACE_ID'].blank?
+      raise ArgumentError, 'Add AUTH_TOKEN in .env' if ENV['AUTH_TOKEN'].blank?
     end
   end
 end
