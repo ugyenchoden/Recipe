@@ -12,7 +12,7 @@ module Api
         allow_any_instance_of(ActionView::Helpers::AssetTagHelper).to receive(:image_tag).and_return('<img src="https://loremflickr.com/300/300">')
       end
 
-      context 'without filters' do
+      context 'without paginations' do
         it 'returns recipes' do
           get '/api/v1/recipes'
           expect(status).to eq(200)

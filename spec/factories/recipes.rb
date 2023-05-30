@@ -10,7 +10,7 @@ FactoryBot.define do
     end
     calories { 300 }
     revision { 1 }
-    entry_id { 'recipe101' }
+    sequence(:entry_id) { |n| "entry#{n}" }
 
     after(:build) do |recipe|
       !recipe.asset && recipe.asset = build(:asset)
