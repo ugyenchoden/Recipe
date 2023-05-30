@@ -43,8 +43,7 @@ module ContentDelivery
       log_error('Content Delivery API error', e)
       {}
     rescue StandardError => e
-      log_error('Unknown Error! Please check the details', e)
-      {}
+      raise 'Unknown Error! Please check the details', e
     end
 
     private
