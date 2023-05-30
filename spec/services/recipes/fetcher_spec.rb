@@ -19,4 +19,3 @@ describe Recipes::Fetcher do
     expect(recipe.name).to eq('Ugyen Choden')
   end
 end
-

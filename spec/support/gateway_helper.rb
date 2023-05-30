@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 def stub_content_delivery_api
-  stub_request(:get, "https://cdn.contentful.com/spaces/#{ENV.fetch('SPACE_ID', nil)}/entries?content_type=recipe&skip=0").
-    with(
+  url = "https://cdn.contentful.com/spaces/#{ENV.fetch('SPACE_ID', nil)}/entries?content_type=recipe&skip=0"
+  stub_request(:get, url)
+    .with(
       headers: {
         'Accept' => '*/*',
         'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
@@ -115,9 +116,9 @@ def response_body # rubocop:disable Metrics/MethodLength
           fields: {
             title: 'ema datsi',
             file: {
-              url: '//images.ctfassets.net/kk2bw5ojx476/61XHcqOBFYAYCGsKugoMYK/0009ec560684b37f7f7abadd66680179/SKU1240_hero-374f8cece3c71f5fcdc939039e00fb96.jpg',
+              url: '//test.jpg',
               details: {
-                size: 194737,
+                size: 194_737,
                 image: {
                   width: 1020,
                   height: 680
