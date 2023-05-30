@@ -4,6 +4,10 @@ def stub_content_delivery_api
   request(200, response_body)
 end
 
+def stub_server_failure
+  request(500, { message: 'Server Down' })
+end
+
 def stub_failed(failure_type)
   body = send("#{failure_type}_failure_body")
   status = failure_type == 'auth_token' ? 401 : 404

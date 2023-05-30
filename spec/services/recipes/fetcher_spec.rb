@@ -78,5 +78,12 @@ describe Recipes::Fetcher do
         expect(body).to include('error 401')
       end
     end
+
+    context 'with server failure' do
+      it 'throws error' do
+        stub_server_failure
+        expect { described_class.new.run }.to raise_error('Unknown Error! Please check the details in the log')
+      end
+    end
   end
 end
