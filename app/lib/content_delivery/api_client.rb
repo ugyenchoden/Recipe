@@ -36,6 +36,9 @@ module ContentDelivery
     rescue Faraday::BadRequestError, Faraday::UnauthorizedError, Faraday::ForbiddenError, Faraday::ResourceNotFound,
            Faraday::UnprocessableEntityError => e
       handle_error(e)
+    rescue Faraday::ConnectionFailed => e
+      log_error('Connection to Content Delivery API failed', e)
+      {}
     rescue Faraday::ClientError => e
       log_error('Content Delivery API error', e)
       {}
@@ -48,15 +51,17 @@ module ContentDelivery
 
     def handle_error(error)
       body = JSON.parse(error.response[:body])
-      log_error(body['message'])
-      send_mail(error, body)
+      status = error.response[:status]
+      message = body['message']
+      puts "Content Delivery API Sync failed with status #{status} with message: #{message}"
+      log_error(message, error)
+      send_mail(status, message)
       # return empty body
       {}
     end
 
-    def send_mail(error, body)
-      status = error.response[:status]
-      ContentDeliveryMailer.notify_sync_failure(status, body['message']).deliver
+    def send_mail(status, message)
+      ContentDeliveryMailer.notify_sync_failure(status, message).deliver
     end
 
     def logger

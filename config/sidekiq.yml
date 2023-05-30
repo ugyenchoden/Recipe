@@ -1,6 +1,7 @@
 ---
 queues:
   - default
+  - mailers
   - tag_fetcher
   - chef_fetcher
   - recipe_fetcher

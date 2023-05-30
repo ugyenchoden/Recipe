@@ -1,6 +1,20 @@
 # frozen_string_literal: true
 
 def stub_content_delivery_api
+  request(200, response_body)
+end
+
+def stub_failed(failure_type)
+  body = send("#{failure_type}_failure_body")
+  status = failure_type == 'auth_token' ? 401 : 404
+  request(status, body)
+end
+
+def stub_client_error
+  request(429, '')
+end
+
+def request(status, body)
   url = "https://cdn.contentful.com/spaces/#{ENV.fetch('SPACE_ID', nil)}/entries?content_type=recipe&skip=0"
   stub_request(:get, url)
     .with(
@@ -10,7 +24,33 @@ def stub_content_delivery_api
         'Authorization' => "Bearer #{ENV.fetch('AUTH_TOKEN', nil)}",
         'User-Agent' => 'Faraday v2.7.5'
       }
-    ).to_return(status: 200, body: response_body.to_json, headers: {})
+    ).to_return(status:, body: body.to_json, headers: {})
+end
+
+def invalid_query_body
+  {
+    sys: { type: 'Error', id: 'InvalidQuery' },
+    message:
+      'The query you sent was invalid. Probably a filter or ordering specification
+       is not applicable to the type of a field.',
+    details: { errors: [{ name: 'unknownContentType', value: 'NONEXISTENT' }] }
+  }
+end
+
+def space_id_failure_body
+  {
+    sys: {
+      type: 'Error', id: 'NotFound'
+    },
+    message: 'The resource could not be found.'
+  }
+end
+
+def auth_token_failure_body
+  {
+    sys: { type: 'Error', id: 'AccessTokenInvalid' },
+    message: 'The access token you sent could not be found or is invalid.'
+  }
 end
 
 def response_body # rubocop:disable Metrics/MethodLength

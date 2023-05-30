@@ -44,7 +44,39 @@ describe Recipes::Fetcher do
       end
     end
 
-    context 'with content_type wrong' do
+    context 'with wrong SPACE_ID' do
+      before do
+        allow(ENV).to receive(:[]).and_call_original
+        allow(ENV).to receive(:[]).with('SPACE_ID').and_return('wrong')
+      end
+
+      it 'throws 404 error' do
+        stub_failed('space_id')
+        described_class.new.run
+        expect(ActionMailer::Base.deliveries.count).to eq(1)
+        mail = ActionMailer::Base.deliveries.first
+        expect(mail.subject).to eq(I18n.t('mailers.content_delivery.subject'))
+
+        body = mail.body.to_s
+        expect(body).to include('error 404')
+      end
+    end
+
+    context 'with wrong AUTH_TOKEN' do
+      before do
+        allow(ENV).to receive(:[]).and_call_original
+        allow(ENV).to receive(:[]).with('AUTH_TOKEN').and_return('wrong')
+      end
+
+      it 'throws 401 error' do
+        stub_failed('auth_token')
+        described_class.new.run
+        expect(ActionMailer::Base.deliveries.count).to eq(1)
+        mail = ActionMailer::Base.deliveries.first
+        expect(mail.subject).to eq(I18n.t('mailers.content_delivery.subject'))
+        body = mail.body.to_s
+        expect(body).to include('error 401')
+      end
     end
   end
 end
