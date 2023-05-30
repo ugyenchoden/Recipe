@@ -1,7 +1,9 @@
-<div class="bg-white border border-gray-200 rounded-lg shadow dark:border-gray-700 mx-auto">
+<div class="bg-white rounded-lg shadow mx-36">
+  <div class="h-600 w-fill">
     <%= image_tag("https:#{@recipe.file_url}", class: "rounded-t-lg") %>
+  </div>
   <div class="px-5 py-1">
-    <h3><%= @recipe.title %></h3>
+    <p><%= @recipe.title %></p>
   </div>
 
   <div class="px-5 py-1">
@@ -13,10 +15,10 @@
   </div>
 
   <div class="px-5 py-1">
-    <%= @recipe.description %>
+    <%= markdown(@recipe.description) %>
   </div>
 
   <div class="px-5 py-1">
-    <p>Recipe by <%= @recipe.chef || '-' %></p>
+    <p>Recipe by <b><%= @recipe.name || '-' %></b></p>
   </div>
 </div>

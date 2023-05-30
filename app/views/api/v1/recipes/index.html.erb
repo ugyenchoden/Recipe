@@ -1,11 +1,21 @@
-<% @recipes.each do |recipe| %>
-  <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:border-gray-700">
-    <a href="<%= api_v1_recipe_path(recipe.id) %>">
-      <%= image_tag("https:#{recipe.file_url}", class: "rounded-t-lg") %>
-
-      <div class="p-5">
-        <p><%= recipe.title %></p>
+<div class="p-4">
+  <h2> Recipes </h2>
+</div>
+<div class="flex flex-wrap">
+  <% @recipes.each do |recipe| %>
+    <div class="w-1/2 p-4">
+      <div class="bg-white border rounded-lg shadow">
+        <a href="<%= api_v1_recipe_path(recipe.id) %>">
+          <%= image_tag("https:#{recipe.file_url}", class: "rounded-t-lg") %>
+        </a>
+        <div class="p-5">
+          <p><%= recipe.title %></p>
+        </div>
       </div>
-    </a>
-  </div>
-<% end %>
+    </div>
+  <% end %>
+</div>
+
+<div>
+  <%= paginate @recipes %>
+</div>
