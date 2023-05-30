@@ -7,7 +7,7 @@ module Recipes
     include Helper
 
     def run
-      fetch_data(0, 'recipe') do |response|
+      fetch_data(0) do |response|
         process_recipes(response)
       end
     end

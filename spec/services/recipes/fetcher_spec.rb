@@ -43,5 +43,8 @@ describe Recipes::Fetcher do
         expect { ContentDelivery::ApiClient.new }.to raise_error(ArgumentError, 'Add AUTH_TOKEN in .env')
       end
     end
+
+    context 'with content_type wrong' do
+    end
   end
 end

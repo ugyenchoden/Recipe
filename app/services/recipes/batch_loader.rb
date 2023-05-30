@@ -4,19 +4,19 @@ module Recipes
   module BatchLoader
     BATCH_SIZE = 100
 
-    def fetch_data(offset, content_type)
-      response = make_request(offset, content_type)
+    def fetch_data(offset)
+      response = make_request(offset)
       return if response.empty? || !response.key?('items')
 
       yield(response)
 
       return response if response['total'] < BATCH_SIZE
 
-      fetch_data(offset + BATCH_SIZE, content_type)
+      fetch_data(offset + BATCH_SIZE)
     end
 
-    def make_request(offset, content_type)
-      Gateways.content_delivery.call('get', "/entries?content_type=#{content_type}&skip=#{offset}")
+    def make_request(offset)
+      Gateways.content_delivery.call('get', "/entries?content_type=recipe&skip=#{offset}")
     end
   end
 end
