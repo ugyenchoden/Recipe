@@ -49,7 +49,8 @@ rails db:sync_recipes
 ```bash
 ./bin/dev
 ```
-or ```bash
+or 
+```bash
 rails s
 ```
 
