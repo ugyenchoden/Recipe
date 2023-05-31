@@ -9,14 +9,14 @@ integrate with content delivery API to fetch recipes
 The setups steps expect following tools installed on the system.
 
 - Git
-- Ruby [3.1.3](https://github.com/ugyenchoden/Recipe/blob/main/.ruby-version)
-- Rails [7.0.4](https://github.com/ugyenchoden/Recipe/blob/main/Gemfile)
+- Ruby [3.1.3](https://github.com/ugyenchoden/RecipeFinder/blob/main/.ruby-version)
+- Rails [7.0.4](https://github.com/ugyenchoden/RecipeFinder/blob/main/Gemfile)
 - PostgreSQL
 
 ##### 1. Check out the repository and install the needed gem
 ```bash
-git clone git@github.com:ugyenchoden/Recipe.git
-cd Recipe
+git clone git@github.com:ugyenchoden/RecipeFinder.git
+cd RecipeFinder
 bundle install
 ```
 
@@ -43,5 +43,13 @@ MAINTENANCE_EMAIL
 note: for initial, please run the task to seed the data from the API
 ```bash
 rails db:sync_recipes 
+```
+
+#### 5 to start the server(with css compiled)
+```bash
+./bin/dev
+```
+or ```bash
+rails s
 ```
 
