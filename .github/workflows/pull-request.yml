@@ -7,6 +7,10 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      SPACE_ID: ${{ secrets.SPACE_ID }}
+      AUTH_TOKEN: ${{ secrets.AUTH_TOKEN }}
+      MAINTENANCE_EMAIL: ${{ secrets.MAINTENANCE_EMAIL }}
     services:
       postgres:
         image: postgres:11-alpine
