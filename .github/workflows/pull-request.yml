@@ -7,7 +7,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    runs-on: [self-hosted, do]
     env:
       SPACE_ID: ${{ secrets.SPACE_ID }}
       AUTH_TOKEN: ${{ secrets.AUTH_TOKEN }}
