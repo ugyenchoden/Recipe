@@ -4,7 +4,7 @@ module Api
   module V1
     class RecipesController < ApplicationController
       def index
-        @recipes = Recipe.all
+        @recipes = Recipe.all.page params[:page]
       end
 
       def show

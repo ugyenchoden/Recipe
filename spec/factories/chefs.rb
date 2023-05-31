@@ -2,8 +2,8 @@
 
 FactoryBot.define do
   factory :chef do
-    name { 'Ugyen Chode' }
+    name { 'Ugyen Choden' }
     revision { 1 }
-    entry_id { 'chef101' }
+    sequence(:entry_id) { |n| "entry#{n}" }
   end
 end
